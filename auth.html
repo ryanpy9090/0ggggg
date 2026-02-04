@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RYAN AI GPT 1 - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <style>
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -200px;
+            left: -200px;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .auth-container::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            bottom: -150px;
+            right: -150px;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+
+        .auth-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 90%;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .auth-logo ion-icon {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .auth-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .google-btn {
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .google-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .google-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #95a5a6;
+            font-size: 0.85rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .signin-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .signin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .auth-footer {
+            margin-top: 2rem;
+            color: #95a5a6;
+            font-size: 0.85rem;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(30px, 30px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-logo">
+                <ion-icon name="planet"></ion-icon>
+            </div>
+            <h1 class="auth-title">RYAN AI GPT 1</h1>
+            <p class="auth-subtitle">Sign in to sync your chats across devices</p>
+
+            <button class="google-btn" id="google-signin-btn">
+                <svg class="google-icon" viewBox="0 0 24 24">
+                    <path fill="#4285F4"
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                    <path fill="#34A853"
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                    <path fill="#FBBC05"
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                    <path fill="#EA4335"
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                </svg>
+                Continue with Google
+            </button>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <input type="email" class="email-input" id="email-input" placeholder="Enter your email">
+            <button class="signin-btn" id="email-signin-btn">Sign In with Email</button>
+
+            <div class="loading" id="loading">
+                <p>Signing you in...</p>
+            </div>
+
+            <div class="auth-footer">
+                By signing in, you agree to sync your data securely
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDummy-Replace-With-Your-Firebase-Config",
+            authDomain: "ryan-ai-gpt.firebaseapp.com",
+            projectId: "ryan-ai-gpt",
+            storageBucket: "ryan-ai-gpt.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // Check if user is already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, redirect to main app
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Google Sign In
+        document.getElementById('google-signin-btn').addEventListener('click', async () => {
+            document.getElementById('loading').classList.add('active');
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                // Save user data to Firestore
+                await setDoc(doc(db, 'users', user.uid), {
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    lastLogin: new Date().toISOString()
+                }, { merge: true });
+
+                // Redirect to main app
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Error signing in:', error);
+                alert('Sign in failed: ' + error.message);
+                document.getElementById('loading').classList.remove('active');
+            }
+        });
+
+        // Email Sign In
+        document.getElementById('email-signin-btn').addEventListener('click', async () => {
+            const email = document.getElementById('email-input').value.trim();
+            if (!email) {
+                alert('Please enter your email');
+                return;
+            }
+
+            document.getElementById('loading').classList.add('active');
+            const password = 'ryan-ai-' + email; // Simple password generation
+
+            try {
+                // Try to sign in first
+                let result;
+                try {
+                    result = await signInWithEmailAndPassword(auth, email, password);
+                } catch (signInError) {
+                    // If sign in fails, create new account
+                    result = await createUserWithEmailAndPassword(auth, email, password);
+                }
+
+                const user = result.user;
+
+                // Save user data
+                await setDoc(doc(db, 'users', user.uid), {
+                    email: user.email,
+                    lastLogin: new Date().toISOString()
+                }, { merge: true });
+
+                // Redirect to main app
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Error with email sign in:', error);
+                alert('Sign in failed: ' + error.message);
+                document.getElementById('loading').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
